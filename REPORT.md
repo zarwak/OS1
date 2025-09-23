@@ -4,7 +4,7 @@ REPORT.md — Feature 2 (Multi-file Project using Make Utility)
 Feature-2 demonstrates how to build a C project composed of multiple .c files using a recursive Makefile approach. The project compiles source files in src/, places object files in obj/, and the final executable in bin/client. This feature also includes versioning via a git branch, an annotated tag, and a GitHub release with the compiled binary.
 
 2. What I implemented (files & structure)
-BSDSF23A001-OS-A01/
+OS1/
 ├── src/
 │   ├── main.c
 │   ├── mystrfunctions.c
