@@ -5,9 +5,13 @@ Explain that the rule indicates the target depends on the object files; when any
 
 ## What is a git tag...
 Annotated vs lightweight: annotated stores metadata and signed comment; lightweight is just a name pointing to a commit.
+A git tag marks a specific commit, usually for a release. It helps track versions and reference stable points in the project.  
+- *Simple tag:* just a name pointing to a commit.  
+- *Annotated tag:* includes metadata (author, date, message) and can be signed.
 
 ## Purpose of Release on GitHub
-To provide downloadable binaries (lib and executables) and a snapshot for graders.
+A "Release" marks a stable version of the project.  
+Attaching binaries allows users to download and run the program without compiling, providing easy access to ready-to-use software.
 
 ## Part 3: Static and Dynamic Libraries
 
@@ -18,6 +22,12 @@ To provide downloadable binaries (lib and executables) and a snapshot for grader
 ### b) PIC (Position Independent Code)
 - Shared libraries (`.so`) must be loaded at arbitrary memory addresses.  
 - Compiling with `-fPIC` ensures the code can run regardless of where it is loaded in memory.
+- *Part 3:*  
+  - Function .o files (mystrfunctions.o, myfilefunctions.o) are compiled into a *static library* (libmyutils.a).  
+  - Variables: LIB_OBJS for function objects, LIB for the library path, DRIVER_OBJS for main/driver.  
+  - Rules: New rule to build the library using ar rcs, linking rule now combines driver objects with the library.
+
+*Key difference:* Part 3 separates function object files into a library, enabling reuse and cleaner linking.
 
 ### c) `LD_LIBRARY_PATH`
 - Environment variable that tells the dynamic linker where to search for shared libraries at runtime.  
@@ -25,6 +35,22 @@ To provide downloadable binaries (lib and executables) and a snapshot for grader
   ```bash
   export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:./lib
   ./bin/client_dynamic
+
+## Comparison and Analysis of Static Library Implementation
+
+### 1. Makefile Comparison: Part 2 vs Part 3
+- *Part 2:*  
+  - All .o files (driver + functions) were linked directly to create the executable.  
+  - Variables: OBJECTS contained every object file.  
+  - Rules: Linking rule combined all .o files without using a library.
+ - *Part 3:*  
+  - Function .o files (mystrfunctions.o, myfilefunctions.o) are compiled into a *static library* (libmyutils.a).  
+  - Variables: LIB_OBJS for function objects, LIB for the library path, DRIVER_OBJS for main/driver.  
+  - Rules: New rule to build the library using ar rcs, linking rule now combines driver objects with the library.
+
+*Key difference:* Part 3 separates function object files into a library, enabling reuse and cleaner linking.
+
+
 ## Part 4: `nm` and Symbols
 
 ### Using `nm`
